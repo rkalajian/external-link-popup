@@ -1,0 +1,208 @@
+/* ── External Link Popup – Frontend Modal ── */
+
+/* Overlay */
+.elp-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999998;
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0);
+    pointer-events: none;
+    transition: background 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.elp-overlay.elp-active {
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(4px);
+    pointer-events: auto;
+}
+
+/* Modal container */
+.elp-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.elp-modal.elp-active {
+    pointer-events: auto;
+    opacity: 1;
+}
+
+/* Inner card */
+.elp-modal-inner {
+    position: relative;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);
+    max-width: 520px;
+    width: 100%;
+    transform: translateY(20px) scale(0.97);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+}
+
+.elp-modal.elp-active .elp-modal-inner {
+    transform: translateY(0) scale(1);
+}
+
+/* Close button */
+.elp-close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    line-height: 1;
+    color: #999;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+    z-index: 1;
+}
+
+.elp-close:hover,
+.elp-close:focus-visible {
+    background: #f0f0f0;
+    color: #333;
+}
+
+/* Body */
+.elp-modal-body {
+    padding: 40px 36px 32px;
+    text-align: center;
+}
+
+/* Logo */
+.elp-logo {
+    display: block;
+    margin: 0 auto 20px;
+    max-width: 220px;
+    height: auto;
+}
+
+/* Site name fallback for logo */
+.elp-site-name {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--elp-primary, #1a5276);
+    margin: 0 0 20px;
+    letter-spacing: -0.02em;
+}
+
+/* Heading */
+.elp-heading {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--elp-heading, #000000);
+    margin: 0 0 14px;
+    line-height: 1.3;
+}
+
+/* Message */
+.elp-message {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: #4a4a5a;
+    margin: 0 0 24px;
+}
+
+/* Action buttons */
+.elp-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.elp-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 140px;
+    padding: 12px 28px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+    line-height: 1.2;
+}
+
+.elp-btn:active {
+    transform: scale(0.97);
+}
+
+/* Primary (Continue) */
+.elp-btn-primary {
+    background: var(--elp-primary, #1a5276);
+    color: #fff !important;
+    border-color: var(--elp-primary, #1a5276);
+}
+
+.elp-btn-primary:hover,
+.elp-btn-primary:focus-visible {
+    background: var(--elp-primary-hover, #154360);
+    border-color: var(--elp-primary-hover, #154360);
+    box-shadow: 0 4px 12px rgba(26, 82, 118, 0.3);
+    color: #fff !important;
+    text-decoration: none;
+}
+
+/* Secondary (Return) */
+.elp-btn-secondary {
+    background: #fff;
+    color: var(--elp-primary, #1a5276);
+    border-color: var(--elp-primary, #1a5276);
+}
+
+.elp-btn-secondary:hover,
+.elp-btn-secondary:focus-visible {
+    background: #f0f6fa;
+    border-color: var(--elp-primary-hover, #154360);
+    box-shadow: 0 4px 12px rgba(26, 82, 118, 0.12);
+}
+
+/* Footer text */
+.elp-footer {
+    font-size: 13px;
+    color: #888;
+    margin: 0;
+    font-style: italic;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+    .elp-modal-body {
+        padding: 32px 24px 24px;
+    }
+
+    .elp-heading {
+        font-size: 18px;
+    }
+
+    .elp-message {
+        font-size: 13.5px;
+    }
+
+    .elp-actions {
+        flex-direction: column;
+    }
+
+    .elp-btn {
+        width: 100%;
+        min-width: unset;
+    }
+}
