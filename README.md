@@ -91,6 +91,8 @@ Ctrl+click, Cmd+click, Shift+click, and middle-click all pass through normally. 
 - Improved plugin headers (license, text domain, requirements)
 - Version-stamped all enqueued assets for proper cache busting
 - Subdomain matching: excluding `example.com` now also covers `*.example.com`
+- Added explicit `current_user_can( 'manage_options' )` check in settings callback (defense in depth)
+- Added `elp_esc_css_color()` helper to validate hex colors at output time before writing to inline `<style>` blocks, preventing CSS injection
 
 ### 2.0
 - Complete rewrite — standalone modal, no Bootstrap dependency
