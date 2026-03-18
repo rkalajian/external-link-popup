@@ -59,6 +59,14 @@ function elp_sanitize_domains( $input ) {
     }, $lines );
     return implode( "\n", array_filter( $clean ) );
 }
+
+/**
+ * Validate a hex color for safe output in a CSS context.
+ * Returns the color if valid, otherwise the fallback.
+ */
+function elp_esc_css_color( $color, $fallback = '#000000' ) {
+    return preg_match( '/^#[0-9a-fA-F]{3}(?:[0-9a-fA-F]{3})?$/', $color ) ? $color : $fallback;
+}
 add_action( 'admin_init', 'elp_register_settings' );
 
 // Admin menu
@@ -75,6 +83,10 @@ add_action( 'admin_menu', 'elp_create_menu' );
 
 // Admin settings page
 function elp_settings_page() {
+    if ( ! current_user_can( 'manage_options' ) ) {
+        wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'external-link-popup' ) );
+    }
+
     $domains  = esc_textarea( get_option( 'elp_excluded_domains', '' ) );
     $heading  = esc_attr( get_option( 'elp_popup_heading', '' ) );
     $message  = wp_kses_post( get_option( 'elp_popup_message', '' ) );
@@ -251,9 +263,9 @@ function elp_add_modal_html() {
     $message = wp_kses_post( get_option( 'elp_popup_message', '' ) );
     $footer   = esc_html( get_option( 'elp_popup_footer', '' ) );
     $logo_url = esc_url( get_option( 'elp_popup_logo', '' ) );
-    $color_primary = esc_attr( get_option( 'elp_color_primary', '#1a5276' ) );
-    $color_hover   = esc_attr( get_option( 'elp_color_primary_hover', '#154360' ) );
-    $color_heading = esc_attr( get_option( 'elp_color_heading', '#000000' ) );
+    $color_primary = elp_esc_css_color( get_option( 'elp_color_primary', '#1a5276' ), '#1a5276' );
+    $color_hover   = elp_esc_css_color( get_option( 'elp_color_primary_hover', '#154360' ), '#154360' );
+    $color_heading = elp_esc_css_color( get_option( 'elp_color_heading', '#000000' ), '#000000' );
     ?>
     <style>
         .elp-modal { --elp-primary: <?php echo $color_primary; ?>; --elp-primary-hover: <?php echo $color_hover; ?>; --elp-heading: <?php echo $color_heading; ?>; }
