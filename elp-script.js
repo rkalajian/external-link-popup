@@ -58,6 +58,8 @@
     document.addEventListener('click', function (e) {
         var anchor = e.target.closest ? e.target.closest('a[href]') : null;
         if (!anchor) return;
+        var rawHref = anchor.getAttribute('href') || '';
+        if (rawHref.indexOf('mailto:') === 0 || rawHref.indexOf('tel:') === 0) return;
         if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
         if (!isExternal(anchor.href)) return;
 
